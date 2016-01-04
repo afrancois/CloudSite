@@ -7,22 +7,23 @@ class PlainTextRenderer(renderers.BaseRenderer):
     media_type = 'text/plain'
     format = 'iot'
     map = None
+    charset = 'iso-8859-1'
 
     def __init__(self):
-        renderers.BaseRenderer.__init__(self)     
+        renderers.BaseRenderer.__init__(self)
         self.map = OpenWeatherMap()
-        
-       
+
+
 
 
     def render(self, data, media_type=None, renderer_context=None):
         if isinstance(data, dict):
-            return self.iot_output(data)
+            return self.iot_output(data).encode(self.charset)
         if isinstance(data, (list, tuple)):
             out = ''
             for i in range(len(data)):
                 out = "{}{} {}\n".format(out,data[i]['cloud_slug'],self.iot_output(data[i]))
-            return out
+            return out.encode(self.charset)
         return data
 
     def iot_output(self,data):
