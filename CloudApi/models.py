@@ -8,17 +8,17 @@ def _slug_default_():
         return uuid.uuid4()
 
 class CurrentState(models.Model):
-    
-    RGB = 0
-    DISCO = 1
-    BLUE_SKY = 2
-    NIGHT = 3
-    OVERCAST = 4
-    GOLDEN = 5
-    SNOW = 6
-    LIGHTNING = 7
-    OUTSIDE = 8
-    
+
+    RGB = 1
+    DISCO = 2
+    BLUE_SKY = 3
+    NIGHT = 4
+    OVERCAST = 5
+    GOLDEN = 6
+    SNOW = 7
+    LIGHTNING = 8
+    OUTSIDE = 0
+
     STATE_CHOICES = (
         ( RGB, 'RGB Color'),
         ( DISCO, 'Disco Mode'),
@@ -31,7 +31,7 @@ class CurrentState(models.Model):
         ( OUTSIDE,"What it's doing outside"),
     )
 
-    
+
 
     created = models.DateTimeField(auto_now_add=True)
     cloud_title = models.CharField(max_length=100,blank=False,default='new cloud',unique=True)
@@ -39,8 +39,8 @@ class CurrentState(models.Model):
     cloud_state = models.IntegerField(choices=STATE_CHOICES,blank=False,default=OUTSIDE)
     cloud_rgb = models.CharField(max_length=7,blank=False,default='#ffffff')
     position = GeopositionField()
-    
-    
+
+
 
     def __unicode__(self):
         return self.cloud_title
